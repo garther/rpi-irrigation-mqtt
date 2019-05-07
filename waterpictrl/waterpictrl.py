@@ -27,18 +27,6 @@ class Outlet:
     def off(self):
         GPIO.output(self.gpio_pin, RELAY_OFF)
 
-    def _func_to_be_threaded(self):
-        i = 0
-        while i < CUTOFF:
-            my_state=GPIO.input(self.gpio_pin)
-            print('outlet is ', my_state)
-            if my_state == 1:
-                print('outlet closed, exiting')
-                break
-            time.sleep(1)
-            i += 1
-        self.off()
-
 class WaterPiCtrl:
     config = None
     mqtt_client = None
@@ -113,12 +101,12 @@ class WaterPiCtrl:
             if value == 'ON':
                 self.outlets[message.topic].on()
                 self.publish_status(self.outlets[message.topic].topic_name, 'ON')
-                threading.Thread(target=self._func_to_be_threaded, args=[message.topic]).start()
+                threading.Thread(target=self._emergency_cutoff_timer, args=[message.topic]).start()
             elif value == 'OFF':
                 self.outlets[message.topic].off()
                 self.publish_status(self.outlets[message.topic].topic_name, 'OFF')
 
-    def _func_to_be_threaded(self,topic):
+    def _emergency_cutoff_timer(self,topic):
         i = 0
         while i < CUTOFF:
             my_state=GPIO.input(self.outlets[topic].gpio_pin)
