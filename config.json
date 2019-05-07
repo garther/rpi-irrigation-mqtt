@@ -1,0 +1,28 @@
+{
+    "mqtt_client_id": "water_pi",
+    "mqtt_host": "192.168.5.10",
+    "mqtt_port": "1883",
+    "verbose": "true",
+    "outlets": [
+      {
+        "gpio_pin": "13",
+        "topic_name": "garden/watering/circuit1",
+        "topic_set": "garden/watering/circuit1/set"
+      },
+      {
+        "gpio_pin": "6",
+        "topic_name": "garden/watering/circuit2",
+        "topic_set": "garden/watering/circuit2/set"
+      },
+      {
+        "gpio_pin": "26",
+        "topic_name": "garden/watering/circuit3",
+        "topic_set": "garden/watering/circuit3/set"
+      },
+      {
+        "gpio_pin": "19",
+        "topic_name": "garden/watering/circuit4",
+        "topic_set": "garden/watering/circuit4/set"
+      }            
+    ]
+  }  

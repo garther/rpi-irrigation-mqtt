@@ -2,16 +2,16 @@
 
 import sys
 import json
-from rpi_switch_mqtt.switcher import Switcher
+from waterpictrl.waterpictrl import WaterPiCtrl 
 
 
 def main(argv):
     if not argv or len(argv) != 1:
-        print 'rpi-switch-mqtt <config file>'
+        print('rpi-switch-mqtt <config file>')
     else:
         with open(argv[0]) as data_file:
             config = json.load(data_file)
-            server = Switcher(config)
+            server = WaterPiCtrl(config)
             server.start()
 
 if __name__ == "__main__":
